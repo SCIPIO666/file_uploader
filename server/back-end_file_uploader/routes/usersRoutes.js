@@ -2,13 +2,18 @@ const {Router}=require('express')
 const usersRouter=Router()
 const userController=require("../controllers/usersController")
 
-usersRouter.post('/',userController.createUser)
+const {userValidationRules,validate}=require('../validators/usersValidator')
+
+usersRouter.post('/',
+    userValidationRules, // Set the rules
+    validate,            // check user details aganiast the rules
+    userController.createUser)
 usersRouter.get('/',userController.listUsers)
 usersRouter.get('/:userId',userController.getUserByID)
 usersRouter.put('/:userId',userController.updateUser)
 usersRouter.delete('/:userId',userController.removeUser)
-usersRouter.post('/auth/sign-in',userController.)
-usersRouter.get('/auth/sign-out',userController.signOutUser)
+usersRouter.post('/auth/log-in',userController)
+usersRouter.get('/auth/log-out',userController.signOutUser)
 
 
 module.exports=usersRouter

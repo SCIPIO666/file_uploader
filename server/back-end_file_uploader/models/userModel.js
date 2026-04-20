@@ -5,7 +5,14 @@ const db=require('../config/prismaConfig')
 async function createUser(name, email, password, role) {
     try {
         const newUser = await db.user.create({
-            data: { name, email, password, role }
+            data: { name, email, password, role },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                // password: false // By not including it, it's excluded
+            }
         });
 
         return newUser; 

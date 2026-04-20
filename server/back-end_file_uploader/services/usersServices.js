@@ -2,12 +2,20 @@ const userModel = require('../models/userModel');
 const logger = require('../utils/logger');
 
 
-//  CREATE
-const createUser = async (name,email,password) => {
+// CREATE
+const createUser = async (name, email, password, role) => {
     try {
+        // Check if user exists before trying to create
+        const existingUser = await userModel.getOneUser(email);
+        if (existingUser) {
+            throw new Error('User with this email already exists');
+        }
 
+        const newUser = await userModel.createUser(name, email, password, role);      
+        return newUser;
     } catch (error) {
-
+        // We throw the error so the Controller's catch block can catch it
+        throw error;
     }
 };
 

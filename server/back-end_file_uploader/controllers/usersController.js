@@ -1,16 +1,28 @@
-const userService=require('../services/usersServices')
+const userService = require('../services/usersServices');
 const logger = require('../utils/logger');
-
-//  CREATE
-const createUser = async (req, res, next) => {
+const bcrypt = require('bcrypt');
+const createUser = async (req, res) => {
     try {
+        const { name, email, password, role } = req.body;
+        
+        //  Generate a salt and hash the password
+        const saltRounds = 12; 
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        //  Call the model with the hashed password
+        const newUser = await userModel.createUser(name, email, hashedPassword, role);
+
+        //  Remove password from the response object for security
+        const { password: _, ...safeUser } = newUser;
+
+        logger.info({ userId: safeUser.id }, 'User registered successfully');
+        return res.status(201).json(safeUser);
 
     } catch (error) {
-        logger.error({ err: error.message }, 'Create User Error');
-        res.status(400).json({ error: "Could not create user" });
+        logger.error({ err: error.message }, 'Registration logic failed');
+        return res.status(400).json({ error: 'Email already exists or request invalid' });
     }
 };
-
 //  LIST ALL
 const listUsers = async (req, res) => {
     try {
