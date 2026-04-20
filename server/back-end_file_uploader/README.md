@@ -1,11 +1,11 @@
 # [FILE UPLOADER PROJECT]
 
-[One sentence describing what this project does]
+[GOOGLE DRIVE CLONE FOR STRORING MEDIA FILES]
 
 ## 🛠️ Tech Stack
 
 **Frontend:** React + Vite + TailwindCSS + React Hook Form + Zod
-**Backend:** Node.js + Express + PostgreSQL + Prisma + Multer + Pino + 
+**Backend:** Node.js + Express + PostgreSQL + Prisma + Multer + Pino + Supabase
 **Auth:** JWT + bcrypt
 **Testing:** Vitest + Supertest + React Testing Library + Playwright
 
