@@ -14,7 +14,8 @@ const createUser = async (name, email, password, role) => {
         const newUser = await userModel.createUser(name, email, password, role);      
         return newUser;
     } catch (error) {
-        // We throw the error so the Controller's catch block can catch it
+        //  throw the error so the Controller's catch block can catch it
+        logger.info(error.message)
         throw error;
     }
 };

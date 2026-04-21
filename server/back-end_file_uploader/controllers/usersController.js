@@ -10,17 +10,29 @@ const createUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         //  Call the model with the hashed password
-        const newUser = await userModel.createUser(name, email, hashedPassword, role);
+        const newUser = await userService.createUser(name, email, hashedPassword, role);
 
         //  Remove password from the response object for security
-        const { password: _, ...safeUser } = newUser;
-
-        logger.info({ userId: safeUser.id }, 'User registered successfully');
+        logger.info(newUser, 'User registered successfully');
         return res.status(201).json(safeUser);
 
     } catch (error) {
         logger.error({ err: error.message }, 'Registration logic failed');
-        return res.status(400).json({ error: 'Email already exists or request invalid' });
+
+
+        if (error.message === 'User with this email already exists') {
+            return res.status(409).json({ error: error.message });
+        }
+
+        if (error.code === 'P2002') {
+            return res.status(409).json({ error: 'Email already in use' });
+        }
+
+
+        return res.status(500).json({ 
+            error: 'Internal Server Error',
+            details: process.env.NODE_ENV === 'development' ? error.message : undefined 
+        });
     }
 };
 //  LIST ALL

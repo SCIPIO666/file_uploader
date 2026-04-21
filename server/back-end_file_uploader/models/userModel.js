@@ -3,6 +3,7 @@ const db=require('../config/prismaConfig')
 
     //CRUD USER DB ACTIONS
 async function createUser(name, email, password, role) {
+    logger.info('about to create user in db')
     try {
         const newUser = await db.user.create({
             data: { name, email, password, role },

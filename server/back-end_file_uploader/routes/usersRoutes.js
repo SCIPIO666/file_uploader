@@ -12,7 +12,7 @@ usersRouter.get('/',userController.listUsers)
 usersRouter.get('/:userId',userController.getUserByID)
 usersRouter.put('/:userId',userController.updateUser)
 usersRouter.delete('/:userId',userController.removeUser)
-usersRouter.post('/auth/log-in',userController)
+usersRouter.post('/auth/log-in',userController.logInUser)
 usersRouter.get('/auth/log-out',userController.signOutUser)
 
 
