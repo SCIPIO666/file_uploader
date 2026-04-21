@@ -1,6 +1,7 @@
 const userService = require('../services/usersServices');
 const logger = require('../utils/logger');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const createUser = async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
@@ -69,10 +70,20 @@ const signOutUser =async  (req, res) => {
 //  LOG IN
 const logInUser= async (req, res,next) => {
     try {
+        const {password,email}=req.body
 
+        const{userWithNoPassword,token}=userService.logInUser(email,password)
+        logger.info(`succesful login ${email}`)
+    return res.status(200).json({
+            message: 'Login successful',
+            token,
+            user: userWithNoPassword
+        });
+
+       
     } catch (error) {
-        logger.error({ err: error.message }, 'Sign Out Error');
-        res.status(500).json({ error: "Sign out failed" });
+        logger.error({ err: error.message }, 'Login Error');
+        res.status(500).json({ error: "Login failed" });
     }
 };
 

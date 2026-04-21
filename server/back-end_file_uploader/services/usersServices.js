@@ -1,6 +1,7 @@
 const userModel = require('../models/userModel');
 const logger = require('../utils/logger');
-
+const bcrypt=require('bcrypt')
+const jwt=require('jsonwebtoken')
 
 // CREATE
 const createUser = async (name, email, password, role) => {
@@ -11,7 +12,8 @@ const createUser = async (name, email, password, role) => {
             throw new Error('User with this email already exists');
         }
 
-        const newUser = await userModel.createUser(name, email, password, role);      
+        const newUser = await userModel.createUser(name, email, password, role);   
+
         return newUser;
     } catch (error) {
         //  throw the error so the Controller's catch block can catch it
@@ -39,12 +41,33 @@ const getUserByID = async () => {
 };
 
 //  LOG IN
-const logInUser= async () => {
+const logInUser= async (email,password) => {
     try {
+             const existingUser= await userModel.getOneUser(email)
+        if(!existingUser){
+           throw new Error('Invalid email or  password');
+        }
+        const passwordIsCorrect= await bcrypt.compare(password, existingUser.password);
+        if (!passwordIsCorrect) {
+          throw new Error('Invalid  password');
+        }
+
+        //email and password checks out,now we create token
+        const token=jwt.sign(
+            { id: existingUser.id, role: existingUser.role }, //user object
+            process.env.JWT_SECRET, //secret
+            { expiresIn: '1d' }//expiry period
+
+
+        )
+                const {password:_, ...userWithNoPassword}=existingUser
+        //Return Token + User Info
+        return {token,userWithNoPassword}
+
 
     } catch (error) {
-        logger.error({ err: error.message }, 'Sign Out Error');
-        res.status(500).json({ error: "Sign out failed" });
+        logger.info(error.message)
+        throw error;
     }
 };
 
