@@ -66,6 +66,15 @@ const signOutUser =async  (req, res) => {
         res.status(500).json({ error: "Sign out failed" });
     }
 };
+//  PROTECT ROUTE
+const getUserDashboard = async(req, res) => {
+    try {
+
+    } catch (error) {
+
+
+    }
+};
 
 //  LOG IN
 const logInUser= async (req, res,next) => {
@@ -114,6 +123,7 @@ module.exports = {
     logInUser,
     signOutUser,
     updateUser,
-    removeUser
+    removeUser,
+    getUserDashboard
 };
 

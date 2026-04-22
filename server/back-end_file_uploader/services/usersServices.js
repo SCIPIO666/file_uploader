@@ -81,7 +81,17 @@ const signOutUser = async() => {
     }
 };
 
-// 5. UPDATE
+//  PROTECT ROUTE
+const getUserDashboard = async() => {
+    try {
+
+    } catch (error) {
+
+
+    }
+};
+
+//  UPDATE
 const updateUser = async () => {
     try {
 
@@ -107,5 +117,6 @@ module.exports = {
     logInUser,
     signOutUser,
     updateUser,
-    removeUser
+    removeUser,
+    getUserDashboard
 };
