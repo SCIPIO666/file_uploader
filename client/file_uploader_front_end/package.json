@@ -10,11 +10,28 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@prisma/client": "^7.8.0",
     "@tailwindcss/vite": "^4.2.2",
+    "@tanstack/react-query": "^5.99.2",
+    "axios": "^1.15.2",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.9.0",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.6",
+    "date-fns": "^4.1.0",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.4.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^1.8.0",
+    "multer": "^2.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^7.14.1",
-    "tailwindcss": "^4.2.2"
+    "react-hook-form": "^7.73.1",
+    "react-router-dom": "^7.14.2",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.2",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

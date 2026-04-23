@@ -24,5 +24,17 @@ const protect = async (req, res, next) => {
         return res.status(401).json({ error: 'Not authorized, no token' });
     }
 };
+// This is a "Factory Function" that returns a middleware
+const restrictTo = (...allowedRoles) => {
+    return (req, res, next) => {
+        // req.user was set by the 'protect' middleware above
+        if (!allowedRoles.includes(req.user.role)) {
+            return res.status(403).json({ 
+                error: 'Permission Denied: You do not have the required role to perform this action' 
+            });
+        }
+        next();
+    };
+};
 
-module.exports = { protect };
+module.exports = { protect, restrictTo };
