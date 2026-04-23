@@ -5,7 +5,17 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+
+</form>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="avatar" />
+      <input name="field1" type="text"/>
+       <input name="field2" type="text"/>
+        <input name="field3" type="text"/>
+      <button type="submit">send</button>
+    </form>
+  </hr>
+
   </body>
 </html>
