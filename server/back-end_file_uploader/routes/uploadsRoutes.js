@@ -1,14 +1,16 @@
-// file.routes.js
-import express from "express";
-const  uploadFile = require("../controllers/uploadController") ;
-const  upload =require("../middleware/uploadMiddleware");
+// routes/file.routes.js
+const express = require("express");
 const router = express.Router();
 
+const { uploadFile } = require("../controllers/uploadController");
+const { authenticate } = require("../middleware/auth.middleware");
+const { upload } = require("../middleware/file.middleware");
+
 router.post(
-  "/",
-  // next cal/ auth before upload call to inject re.user
-  upload.single("file"), // ✅ req.file injected
+  "/upload",
+  authenticate,
+  upload.single("file"),
   uploadFile
 );
 
-export default router;
+module.exports = router;

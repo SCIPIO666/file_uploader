@@ -1,6 +1,8 @@
-// file.validator.js
-import { z } from "zod";
+// validators/file.validator.js
+const { z } = require("zod");
 
-export const uploadSchema = z.object({
-  folderId: z.string().cuid().optional()
+const uploadSchema = z.object({
+  folderId: z.string().cuid().optional(),
 });
+
+module.exports = { uploadSchema };
